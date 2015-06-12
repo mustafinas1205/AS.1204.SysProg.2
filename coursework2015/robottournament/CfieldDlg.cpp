@@ -206,6 +206,14 @@ void CfieldDlg::Play()
 									{
 										int destx = curx + Step->actions[i]->dx;
 										int desty = cury + Step->actions[i]->dy;
+										if (destx<0)
+											destx+=paintDlg.FieldParameters.fieldWidth;
+										else if (destx>=paintDlg.FieldParameters.fieldWidth)
+											destx-=paintDlg.FieldParameters.fieldWidth;
+										if (desty<0)
+											desty+=paintDlg.FieldParameters.fieldHeight;
+										else if (desty>=paintDlg.FieldParameters.fieldHeight)
+											desty-=paintDlg.FieldParameters.fieldHeight;
 										int victim = paintDlg.matrix[destx][desty];
 										if (victim != -1)
 										{

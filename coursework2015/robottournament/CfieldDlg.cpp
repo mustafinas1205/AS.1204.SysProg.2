@@ -28,9 +28,6 @@ IMPLEMENT_DYNAMIC(CfieldDlg, CDialogEx)
 	, infoLock(-1)
 	, rkills(0)
 {
-	/*upperleftCellCoords[0] = 0;
-	upperleftCellCoords[1] = 0;
-	n = 20;*/
 }
 
 CfieldDlg::~CfieldDlg()
@@ -402,7 +399,7 @@ void CfieldDlg::Play()
 		delete Stepinfo->history;
 		delete Stepinfo;
 
-		Sleep(100);
+		Sleep(50);
 	}
 
 	for (int i = 0; i < paintDlg.FieldParameters.rivals; i++)	//после битвы
@@ -449,24 +446,20 @@ void CfieldDlg::Play()
 		{
 			if (paintDlg.robots[i]->player)
 			{
+				int player = paintDlg.robots[i]->player;
 				int rofp = 0;
-				int dots = 0;
 				string name = paintDlg.robots[i]->name.GetString();
-				for (int j = 0; j < name.size(); j++)
-				{
-					if (name[j] == '.')
-						dots++;
-				}
-				if (dots > 1)
+				if (name.size() > 12)
 				{
 					name.pop_back(); name.pop_back();
 				}
 				for (int j = i; j < paintDlg.FieldParameters.rivals; j++)
 				{
-					if (paintDlg.robots[j]->alive && paintDlg.robots[i]->player == paintDlg.robots[j]->player)
+					if (paintDlg.robots[j]->player == player)
 					{
-						rofp++;
 						paintDlg.robots[j]->player = 0;
+						if (paintDlg.robots[j]->alive)
+							rofp++;
 					}
 				}
 				rofp++;

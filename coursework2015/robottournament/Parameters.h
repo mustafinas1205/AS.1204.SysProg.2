@@ -123,10 +123,10 @@ inline void DoAction(step *Step, int type, int dx, int dy)
 {
 	if (type != ACT_MOVE && type != ACT_ATTACK)
 		return;
-	if (Step->actions[type])
-		delete Step->actions[type];
 	if (type == ACT_MOVE && !dx && !dy)
 		return;
+	if (Step->actions[type])
+		delete Step->actions[type];
 	Step->actions[type] = new action;
 	Step->actions[type]->dx = dx;
 	Step->actions[type]->dy = dy;
@@ -135,7 +135,7 @@ inline void DoAction(step *Step, int type, int dx, int dy)
 
 inline void DoAction(step *Step, int type, int A, int P, int V)
 {
-	if (type != ACT_TECH)
+	if (type != ACT_TECH || A<0 || P<0 || V<0)
 		return;
 	if (Step->actions[type])
 		delete Step->actions[type];
@@ -149,6 +149,8 @@ inline void DoAction(step *Step, int type, int A, int P, int V)
 inline void DoAction(step *Step, int type, int dx, int dy, int A, int P, int V)
 {
 	if (type == ACT_MOVE && !dx && !dy)
+		return;
+	if (type == ACT_TECH && (A<0 || P<0 || V<0))
 		return;
 	if (Step->actions[type])
 		delete Step->actions[type];

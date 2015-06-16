@@ -60,7 +60,7 @@ CrobottournamentDlg::CrobottournamentDlg(CWnd* pParent /*=NULL*/)
 	, Emax(1000)
 	, Lmax(100)
 	, Vmax(50)
-	, Rmax(20)
+	, Rmax(10)
 	, dL(10)
 	, dEs(1)
 	, dEv(2)
@@ -71,7 +71,7 @@ CrobottournamentDlg::CrobottournamentDlg(CWnd* pParent /*=NULL*/)
 	, Nl(10)
 	, rndmin(0.4)
 	, rndmax(0.8)
-	, K(150)
+	, K(100)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }

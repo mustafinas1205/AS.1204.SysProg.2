@@ -158,6 +158,7 @@ if (length_of_step>min_dist)
 					DoAction(Step,ACT_TECH,0,0.6*myL,0.4*myL);
 					int min = 1, max = fieldWidth/rivals;
 					int rnd	 = rand();
+					if (max == min) max = min + 1;
 					int dx = min + rnd%(max-min);
 					rnd	 = rand();
 					int dy = min + rnd%(max-min);

@@ -1,4 +1,4 @@
-// robotbase.cpp: определяет экспортированные функции для приложения DLL.
+// robotbase.cpp: Г®ГЇГ°ГҐГ¤ГҐГ«ГїГҐГІ ГЅГЄГ±ГЇГ®Г°ГІГЁГ°Г®ГўГ Г­Г­Г»ГҐ ГґГіГ­ГЄГ¶ГЁГЁ Г¤Г«Гї ГЇГ°ГЁГ«Г®Г¦ГҐГ­ГЁГї DLL.
 //
 
 #include "stdafx.h"
@@ -27,7 +27,7 @@ void DoStep(stepinfo *Info, step *Step)
 		}
 	}
 	
-	for (int i = 0; i<Info->field->Ne; i++)	//если заряжаемся
+	for (int i = 0; i<Info->field->Ne; i++)	//ГҐГ±Г«ГЁ Г§Г Г°ГїГ¦Г ГҐГ¬Г±Гї
 	{
 		if (Info->objects[i]->x == x && Info->objects[i]->y == y && E < 0.95*Info->field->Emax)
 		{
@@ -36,14 +36,14 @@ void DoStep(stepinfo *Info, step *Step)
 		}
 	}
 
-	if (E < 0.7*Info->field->Emax)	//если мало энергии
+	if (E < 0.7*Info->field->Emax)	//ГҐГ±Г«ГЁ Г¬Г Г«Г® ГЅГ­ГҐГ°ГЈГЁГЁ
 	{
 		DoAction(Step, ACT_TECH, 0, L*3/4, L/4);
 		int eid = 0;
 		int ex = Info->objects[eid]->x;
 		int ey = Info->objects[eid]->y;
 		double mindist = sqrt(pow(ex-x, 2) + pow(ey-y, 2));
-		for (int i = 1; i<Info->field->Ne; i++)	//ищем ближайшую зарядку
+		for (int i = 1; i<Info->field->Ne; i++)	//ГЁГ№ГҐГ¬ ГЎГ«ГЁГ¦Г Г©ГёГіГѕ Г§Г Г°ГїГ¤ГЄГі
 		{
 			ex = Info->objects[i]->x;
 			ey = Info->objects[i]->y;
@@ -83,7 +83,7 @@ void DoStep(stepinfo *Info, step *Step)
 		int lx = Info->objects[lid]->x;
 		int ly = Info->objects[lid]->y;
 		double mindist = sqrt(pow(lx-x, 2) + pow(ly-y, 2));
-		for (int i = Info->field->Ne+1; i<Info->field->Ne + Info->field->Nl; i++)	//ищем ближайшую станцию
+		for (int i = Info->field->Ne+1; i<Info->field->Ne + Info->field->Nl; i++)	//ГЁГ№ГҐГ¬ ГЎГ«ГЁГ¦Г Г©ГёГіГѕ Г±ГІГ Г­Г¶ГЁГѕ
 		{
 			lx = Info->objects[i]->x;
 			ly = Info->objects[i]->y;
@@ -125,7 +125,7 @@ void DoStep(stepinfo *Info, step *Step)
 				double robodist = sqrt(pow(hisx-x,2) + pow(hisy-y,2));
 				if (robodist < maxattack)
 				{
-					double hisP = Info->robots[i]->A * Info->robots[i]->E / Info->field->Emax;
+					double hisP = Info->robots[i]->P * Info->robots[i]->E / Info->field->Emax;
 					if (hisP < A)
 					{
 						target = i;

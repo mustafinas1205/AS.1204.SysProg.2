@@ -244,22 +244,16 @@ void CfieldDlg::Play()
 													paintDlg.robots[actingRobot]->attackedBy[victim] = true;
 													if (A > P)	//удачная атака
 													{
-														if (paintDlg.robots[victim]->newP > 0)
-														{
-															paintDlg.robots[victim]->newP -= A-P;
-															paintDlg.robots[victim]->newL -= A-P;
-														}
-														else
+														paintDlg.robots[victim]->newP -= A-P;
+														paintDlg.robots[victim]->newL -= A-P;
+														if (paintDlg.robots[victim]->newP <= 0)
 															paintDlg.robots[victim]->newE -= abs(P - A)*paintDlg.FieldParameters.Emax/paintDlg.FieldParameters.Lmax;
 													}
 													else    //неудачная атака
 													{
-														if (paintDlg.robots[actingRobot]->newA > 0)
-														{
-															paintDlg.robots[actingRobot]->newA -= P-A;
-															paintDlg.robots[actingRobot]->newL -= P-A;
-														}
-														else
+														paintDlg.robots[actingRobot]->newA -= P-A;
+														paintDlg.robots[actingRobot]->newL -= P-A;
+														if (paintDlg.robots[actingRobot]->newA <= 0)
 															paintDlg.robots[actingRobot]->newE -= abs(P - A)*paintDlg.FieldParameters.Emax/paintDlg.FieldParameters.Lmax;
 													}
 													if (paintDlg.robots[victim]->newE <= 0)	//проверка убийства
@@ -274,6 +268,8 @@ void CfieldDlg::Play()
 								}
 							case ACT_TECH:
 								{
+									if (Step->actions[i]->A < 0 || Step->actions[i]->P < 0 || Step->actions[i]->V < 0)
+										break;
 									int Lcur = paintDlg.robots[actingRobot]->L;
 									int Lnew = paintDlg.robots[actingRobot]->newL;
 									int Ldes = Step->actions[i]->A + Step->actions[i]->P + Step->actions[i]->V;
@@ -361,6 +357,10 @@ void CfieldDlg::Play()
 				{
 					paintDlg.robots[i]->newL -= paintDlg.robots[i]->newP;
 					paintDlg.robots[i]->newP = 0;
+				}
+				if (paintDlg.robots[i]->newL < 0)
+				{
+					paintDlg.robots[i]->newL = 0;
 				}
 				paintDlg.robots[i]->A = paintDlg.robots[i]->newA;
 				paintDlg.robots[i]->P = paintDlg.robots[i]->newP;

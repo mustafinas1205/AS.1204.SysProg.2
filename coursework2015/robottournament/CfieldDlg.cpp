@@ -244,16 +244,22 @@ void CfieldDlg::Play()
 													paintDlg.robots[actingRobot]->attackedBy[victim] = true;
 													if (A > P)	//удачная атака
 													{
-														paintDlg.robots[victim]->newP -= A-P;
-														paintDlg.robots[victim]->newL -= A-P;
-														if (paintDlg.robots[victim]->newP <= 0)
+														if (paintDlg.robots[victim]->newP > 0 && paintDlg.robots[victim]->P > 0)
+														{
+															paintDlg.robots[victim]->newP -= A-P;
+															paintDlg.robots[victim]->newL -= A-P;
+														}
+														else
 															paintDlg.robots[victim]->newE -= abs(P - A)*paintDlg.FieldParameters.Emax/paintDlg.FieldParameters.Lmax;
 													}
 													else    //неудачная атака
 													{
-														paintDlg.robots[actingRobot]->newA -= P-A;
-														paintDlg.robots[actingRobot]->newL -= P-A;
-														if (paintDlg.robots[actingRobot]->newA <= 0)
+														if (paintDlg.robots[actingRobot]->newA > 0 && paintDlg.robots[actingRobot]->A > 0)
+														{
+															paintDlg.robots[actingRobot]->newA -= P-A;
+															paintDlg.robots[actingRobot]->newL -= P-A;
+														}
+														else
 															paintDlg.robots[actingRobot]->newE -= abs(P - A)*paintDlg.FieldParameters.Emax/paintDlg.FieldParameters.Lmax;
 													}
 													if (paintDlg.robots[victim]->newE <= 0)	//проверка убийства
@@ -301,17 +307,9 @@ void CfieldDlg::Play()
 				int newy = paintDlg.robots[actingRobot]->newy;
 				int curobj = paintDlg.matrix[newx][newy];
 				if (curobj == OBJ_CHARGER)
-				{
 					paintDlg.robots[actingRobot]->newE += paintDlg.FieldParameters.dE;
-					if (paintDlg.robots[actingRobot]->newE > paintDlg.FieldParameters.Emax)
-						paintDlg.robots[actingRobot]->newE = paintDlg.FieldParameters.Emax;
-				}
 				if (curobj == OBJ_TECH)
-				{
 					paintDlg.robots[actingRobot]->newL += paintDlg.FieldParameters.dL;
-					if (paintDlg.robots[actingRobot]->newL > paintDlg.FieldParameters.Lmax)
-						paintDlg.robots[actingRobot]->newL = paintDlg.FieldParameters.Lmax;
-				}
 				if (curobj == OBJ_DEAD)
 				{
 					for (int i=0; i<paintDlg.FieldParameters.rivals; i++)	//ищем труп, на котором стоим
@@ -359,9 +357,11 @@ void CfieldDlg::Play()
 					paintDlg.robots[i]->newP = 0;
 				}
 				if (paintDlg.robots[i]->newL < 0)
-				{
 					paintDlg.robots[i]->newL = 0;
-				}
+				if (paintDlg.robots[i]->newL > paintDlg.FieldParameters.Lmax)
+					paintDlg.robots[i]->newL = paintDlg.FieldParameters.Lmax;
+				if (paintDlg.robots[i]->newE > paintDlg.FieldParameters.Emax)
+					paintDlg.robots[i]->newE = paintDlg.FieldParameters.Emax;
 				paintDlg.robots[i]->A = paintDlg.robots[i]->newA;
 				paintDlg.robots[i]->P = paintDlg.robots[i]->newP;
 				paintDlg.robots[i]->V = paintDlg.robots[i]->newV;

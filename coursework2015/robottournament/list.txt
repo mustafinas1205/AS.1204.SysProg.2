@@ -4,9 +4,11 @@ robotbase.03.dll
 robotbase.04.dll
 robotbase.06.dll
 robotbase.07.dll
+robotbase.08.dll
 robotbase.09.dll
+robotbase.11.dll
 robotbase.17.dll
 robotbase.19.dll
 robotbase.20.dll
 robotbase.22.dll
-robotbase.24.dll
+robotbase.24.dll 5

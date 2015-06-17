@@ -17,10 +17,10 @@ void DoStep(stepinfo *Info, step *Step)
 	int y = Info->robots[id]->y;
 
 	int bros = Info->robots[id]->playerid;
-	int egor = 0;
+	int egor = bros;
 	for (int i = 0; i<Info->field->rivals; i++)
 	{
-		if (Info->robots[i]->name.GetString() == "robotbase.19" || Info->robots[i]->name.GetString() == "robotbase.19.1")
+		if (Info->robots[i]->name == "robotbase.19" || Info->robots[i]->name == "robotbase.19.1")
 		{
 			egor = Info->robots[i]->playerid;
 			break;
@@ -36,9 +36,12 @@ void DoStep(stepinfo *Info, step *Step)
 		}
 	}
 
-	if (E < 0.7*Info->field->Emax)	//åñëè ìàëî ýíåðãèè
-	{
-		DoAction(Step, ACT_TECH, 0, L*3/4, L/4);
+	if (E < 0.6*Info->field->Emax || Info->stepnum > 995)	//åñëè ìàëî ýíåðãèè
+	{ 
+		int V = Info->field->Vmax;
+		if (V > L)
+		V = L;
+		DoAction(Step, ACT_TECH, 0, L - V, V);
 		int eid = 0;
 		int ex = Info->objects[eid]->x;
 		int ey = Info->objects[eid]->y;
@@ -73,12 +76,10 @@ void DoStep(stepinfo *Info, step *Step)
 		}
 	}
 
-	else if (Info->stepnum < 100)
-		DoAction(Step, ACT_TECH, 0, L, 0);
 
 	else
 	{
-		DoAction(Step, ACT_TECH, L/2, L/4, L/4);
+		DoAction(Step, ACT_TECH, L/5,L/2 ,L*0.3);
 		int lid = Info->field->Ne;
 		int lx = Info->objects[lid]->x;
 		int ly = Info->objects[lid]->y;
@@ -123,10 +124,10 @@ void DoStep(stepinfo *Info, step *Step)
 				int hisx = Info->robots[i]->x;
 				int hisy = Info->robots[i]->y;
 				double robodist = sqrt(pow(hisx-x,2) + pow(hisy-y,2));
-				if (robodist < maxattack)
+				if (robodist < maxattack && hisx!=x && hisy!=y)
 				{
 					double hisP = Info->robots[i]->P * Info->robots[i]->E / Info->field->Emax;
-					if (hisP < A)
+					if (hisP*0.2 < A*0.8)
 					{
 						target = i;
 						found = true;

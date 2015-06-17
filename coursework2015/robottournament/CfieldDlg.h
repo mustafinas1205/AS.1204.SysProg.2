@@ -58,5 +58,6 @@ public:
 	int deadPoints;
 	int rndmin;
 	int rndmax;
+	afx_msg void OnLbnDblclkList1();
 };
 

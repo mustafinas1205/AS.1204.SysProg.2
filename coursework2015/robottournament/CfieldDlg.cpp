@@ -73,6 +73,7 @@ BEGIN_MESSAGE_MAP(CfieldDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_RIGHTBTN, &CfieldDlg::OnBnClickedRightbtn)
 	ON_BN_CLICKED(IDC_BUTTON2, &CfieldDlg::OnBnClickedButton2)
 	ON_LBN_SELCHANGE(IDC_LIST1, &CfieldDlg::OnLbnSelchangeList1)
+	ON_LBN_DBLCLK(IDC_LIST1, &CfieldDlg::OnLbnDblclkList1)
 END_MESSAGE_MAP()
 
 
@@ -654,4 +655,9 @@ void CfieldDlg::Sort()
 			}
 		}
 	}
+}
+
+void CfieldDlg::OnLbnDblclkList1()
+{
+	OnBnClickedButton2();
 }
